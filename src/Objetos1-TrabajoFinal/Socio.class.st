@@ -22,22 +22,28 @@ Socio >> aCargo [
 	^ aCargo
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accept/cancel' }
 Socio >> alDia: cuotas [
 	^ pagos size - 1
 		= (self buscar: cuotas desde: pagos first fecha hasta: Date today) size 
 			
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding item' }
 Socio >> altaEstudiante: unNombre grado: unGrado division: unaDivision dni: unDNI [
-|nuevoEstudiante|
-nuevoEstudiante := Estudiante new: unNombre grado: unGrado division: unaDivision  dni: unDNI encargado: self.
-aCargo add: nuevoEstudiante .
-^nuevoEstudiante 
+	| nuevoEstudiante |
+	aCargo detect: [ :each | each dni = unDNI ] ifFound: [ ^Error signal].
+	nuevoEstudiante := Estudiante
+		new: unNombre
+		grado: unGrado
+		division: unaDivision
+		dni: unDNI
+		encargado: self.
+	aCargo add: nuevoEstudiante.
+	^ nuevoEstudiante
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 Socio >> buscar: cuotas desde: fromDate hasta: toDate [
 	^ cuotas
 				select: [ :each | 
@@ -47,7 +53,7 @@ Socio >> buscar: cuotas desde: fromDate hasta: toDate [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #calculating }
 Socio >> calcularPagos: fromDate hasta: toDate [
 	^ (pagos
 		select: [ :each | each fecha between: fromDate and: toDate ])
@@ -59,7 +65,7 @@ Socio >> dni [
 	^ DNI
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 Socio >> new: nSocio tel: telefono DNI: unDNI [
 	nroSocio := nSocio.
 	tel := telefono.
@@ -83,7 +89,7 @@ Socio >> pagoCuota: unaCuota metodoDePago: unMetodoDePago [
 		add: (Pago new: nroSocio cobro: unaCuota metodoDePago: unMetodoDePago)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding item' }
 Socio >> pagoMatricula: unaMatricula metodoDePago: unMetodoDePago [
 	pagos
 		add: (Pago new: nroSocio cobro: unaMatricula metodoDePago: unMetodoDePago)

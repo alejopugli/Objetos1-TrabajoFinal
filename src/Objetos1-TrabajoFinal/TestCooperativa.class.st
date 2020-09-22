@@ -94,6 +94,32 @@ TestCooperativa >> testAltaDeCuota [
 ]
 
 { #category : #tests }
+TestCooperativa >> testAltaDeEstudiante [
+	| socio |
+	socio := self altaDeSocio: 10 tel: 999.
+	self assert: socio aCargo size equals: 0.
+	socio
+		altaEstudiante: 'Joan'
+		grado: 1
+		division: 'A'
+		dni: 1010.
+	self assert: socio aCargo size equals: 1.
+	self
+		should: [ socio
+				altaEstudiante: 'Juan'
+				grado: 2
+				division: 'A'
+				dni: 1010 ]
+		raise: Error.
+		socio
+		altaEstudiante: 'Mirco'
+		grado: 1
+		division: 'A'
+		dni: 1011.
+	self assert: socio aCargo size equals: 2.
+]
+
+{ #category : #tests }
 TestCooperativa >> testAltaSocio [
 	self assert: cooperativa socios size equals: 0.
 	cooperativa altaDeSocio: 1 tel: 294.

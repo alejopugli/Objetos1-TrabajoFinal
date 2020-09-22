@@ -66,13 +66,13 @@ Cooperativa >> altaDeSocio: unDNI tel: telefono [
 	^ nuevoSocio
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #calculations }
 Cooperativa >> calcularIngresos: fromDate hasta: toDate [
 	^ socios
 		sumNumbers: [ :each | each calcularPagos: fromDate hasta: toDate ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 Cooperativa >> consultarPagos: unSocio [
 	^ unSocio pagos
 ]
@@ -104,7 +104,7 @@ Cooperativa >> metodosDePago [
 	^ metodosDePago
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 Cooperativa >> pagoCuota: unNroSocio mes: mes año: año metodoDePago: unMetodoDePago [
 	| cuota |
 	cuota := cuotas
@@ -121,7 +121,7 @@ Cooperativa >> socios [
 	^ socios
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 Cooperativa >> sociosAlDia [
 	^socios select: [:each | each alDia: cuotas].
 	

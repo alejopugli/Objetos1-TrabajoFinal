@@ -17,6 +17,11 @@ Estudiante class >> new: unNombre grado: unGrado division: unaDivision dni: unDN
 
 ]
 
+{ #category : #accessing }
+Estudiante >> dni [
+	^ DNI
+]
+
 { #category : #'instance creation' }
 Estudiante >> new: unNombre grado: unGrado division: unaDivision dni: unDNI encargado: unSocio [
 

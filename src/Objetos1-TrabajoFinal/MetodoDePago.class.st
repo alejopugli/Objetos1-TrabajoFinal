@@ -14,7 +14,7 @@ MetodoDePago class >> new: nombre comision: comision [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #calculating }
 MetodoDePago >> cobrarComision: unMonto [
 
 ^ unMonto - (unMonto * comision / 100). 
