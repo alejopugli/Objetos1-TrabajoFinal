@@ -60,10 +60,21 @@ Cooperativa >> altaDeSocio: unDNI tel: telefono [
 		detect: [ :each | each dni = unDNI ]
 		ifFound: [ ^ Error signal ].
 	nuevoSocio := Socio new: socios size tel: telefono DNI: unDNI.
+	nuevoSocio pagoMatricula: matricula  metodoDePago: metodosDePago first. 
 	socios add: nuevoSocio.
-	"self pagoCuota  pagoCuota: matricula valor couta: matricula."
 	"alta de estudiante?"
 	^ nuevoSocio
+]
+
+{ #category : #'as yet unclassified' }
+Cooperativa >> calcularIngresos: fromDate hasta: toDate [
+	^ socios
+		sumNumbers: [ :each | each calcularPagos: fromDate hasta: toDate ]
+]
+
+{ #category : #'as yet unclassified' }
+Cooperativa >> consultarPagos: unSocio [
+	^ unSocio pagos
 ]
 
 { #category : #accessing }
@@ -93,7 +104,25 @@ Cooperativa >> metodosDePago [
 	^ metodosDePago
 ]
 
+{ #category : #'as yet unclassified' }
+Cooperativa >> pagoCuota: unNroSocio mes: mes año: año metodoDePago: unMetodoDePago [
+	| cuota |
+	cuota := cuotas
+		detect: [ :each | each mes = mes and: each año = año ] ifNone:[^Error signal].
+	^ (socios
+		detect: [ :each | each nroSocio = unNroSocio ]
+		ifNone: [ ^ Error signal ])
+		pagoCuota: cuota
+		metodoDePago: unMetodoDePago
+]
+
 { #category : #accessing }
 Cooperativa >> socios [
 	^ socios
+]
+
+{ #category : #'as yet unclassified' }
+Cooperativa >> sociosAlDia [
+	^socios select: [:each | each alDia: cuotas].
+	
 ]

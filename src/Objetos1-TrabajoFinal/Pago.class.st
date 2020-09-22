@@ -32,7 +32,9 @@ Pago >> monto [
 
 { #category : #'instance creation' }
 Pago >> new: nroSocio cobro: matriCuota metodoDePago: unMetodoDePago [
-corresponde := nroSocio .
-fecha:= Date today.
-monto:= unMetodoDePago cobrarComision: matriCuota  valor.
+	de := nroSocio.
+	corresponde := matriCuota .
+	fecha := Date today.
+	monto := unMetodoDePago cobrarComision: matriCuota valor.
+	^ self
 ]

@@ -18,6 +18,11 @@ Cuota >> año [
 	^ año
 ]
 
+{ #category : #comparing }
+Cuota >> between: fromDate and: toDate [
+
+]
+
 { #category : #accessing }
 Cuota >> mes [
 	^ mes
