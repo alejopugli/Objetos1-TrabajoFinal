@@ -191,13 +191,20 @@ self assert: (comisionDel15 cobrarComision: 100) equals: 85.
 TestCooperativa >> testConsultarPagos [
 	| socio cuota cuota2 |
 	socio := self altaDeSocio: 122 tel: 123.
-	self assert: (cooperativa consultarPagos: socio) size equals: 1.
+	self
+		assert: (cooperativa consultarPagos: socio nroSocio) size
+		equals: 1.
 	cuota := self agregarCuota: 01.
 	self pagoCuota: socio cuota: cuota.
-	self assert: (cooperativa consultarPagos: socio) size equals: 2.
+	self
+		assert: (cooperativa consultarPagos: socio nroSocio) size
+		equals: 2.
 	cuota2 := self agregarCuota: 02.
 	self pagoCuota: socio cuota: cuota2.
-	self assert: (cooperativa consultarPagos: socio) size equals: 3
+	self
+		assert: (cooperativa consultarPagos: socio nroSocio) size
+		equals: 3.
+	self should: [ cooperativa consultarPagos: 9999 ] raise: Error
 ]
 
 { #category : #tests }

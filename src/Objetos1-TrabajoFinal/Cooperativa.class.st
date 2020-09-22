@@ -73,8 +73,8 @@ Cooperativa >> calcularIngresos: fromDate hasta: toDate [
 ]
 
 { #category : #accessing }
-Cooperativa >> consultarPagos: unSocio [
-	^ unSocio pagos
+Cooperativa >> consultarPagos: unNroSocio [
+	^(socios detect: [ :each | each nroSocio = unNroSocio  ]) pagos
 ]
 
 { #category : #accessing }
