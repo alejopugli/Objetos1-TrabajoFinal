@@ -26,6 +26,12 @@ Pago >> fecha [
 ]
 
 { #category : #accessing }
+Pago >> fecha: anObject [
+"solo para el uso de test, no se cumple el ocultamiento de información"
+	fecha := anObject
+]
+
+{ #category : #accessing }
 Pago >> monto [
 	^ monto
 ]

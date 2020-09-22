@@ -192,8 +192,10 @@ TestCooperativa >> testPagoDeCuota [
 TestCooperativa >> testSociosAlDia [
 	| socio socio2 cuota cuota2 |
 	socio := self altaDeSocio: 122 tel: 123.
+	socio pagos first fecha: (Date year: 2020 day: 1).
 	socio2 := self altaDeSocio: 121 tel: 124.
-	cuota := self agregarCuota: 10.
+	socio2 pagos first fecha: (Date year: 2020 day: 1).
+	cuota := self agregarCuota: 1.
 	self assert: cooperativa sociosAlDia size equals: 0.
 	self pagoCuota: socio cuota: cuota.
 	self assert: cooperativa sociosAlDia first equals: socio.
