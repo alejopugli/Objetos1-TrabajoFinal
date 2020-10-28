@@ -84,7 +84,6 @@ Cooperativa >> cuotas [
 
 { #category : #initialization }
 Cooperativa >> initialize [
-|ui|
 	socios := OrderedCollection new.
 	cuotas := OrderedCollection new.
 	matricula := Matricula new: 0.
@@ -92,7 +91,6 @@ Cooperativa >> initialize [
 	self agregarMetodoDePago: 'Transferencia' comision: 0.
 	self agregarMetodoDePago: 'PagoFacil' comision: 10.
 	self agregarMetodoDePago: 'Kiosko' comision: 15.
-	ui := Aplicacion new openWithSpec.
 	^ self
 ]
 
