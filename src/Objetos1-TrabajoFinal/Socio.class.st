@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tel',
 		'nroSocio',
-		'DNI',
+		'dni',
 		'pagos',
 		'aCargo',
 		'pagoMatricula'
@@ -73,14 +73,14 @@ Socio >> calcularPagos: fromDate hasta: toDate [
 
 { #category : #accessing }
 Socio >> dni [
-	^ DNI
+	^ dni
 ]
 
 { #category : #'instance creation' }
 Socio >> new: nSocio tel: telefono DNI: unDNI [
 	nroSocio := nSocio.
 	tel := telefono.
-	DNI := unDNI.
+	dni := unDNI.
 	pagos := OrderedCollection new.
 	aCargo := OrderedCollection new.
 	^ self
