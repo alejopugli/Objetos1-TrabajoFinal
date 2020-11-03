@@ -6,7 +6,8 @@ Class {
 		'nroSocio',
 		'DNI',
 		'pagos',
-		'aCargo'
+		'aCargo',
+		'pagoMatricula'
 	],
 	#category : #'Objetos1-TrabajoFinal-model'
 }
@@ -24,9 +25,11 @@ Socio >> aCargo [
 
 { #category : #'accept/cancel' }
 Socio >> alDia: cuotas [
-	^ pagos size - 1
-		= (self buscar: cuotas desde: pagos first fecha hasta: Date today) size 
-			
+	pagos
+		ifNotEmpty: [ ^ pagos size
+				= (self buscar: cuotas desde: pagoMatricula fecha  hasta: Date today) size ]
+		ifEmpty: [ cuotas ifEmpty: [ ^ true ].
+			^ false ]
 ]
 
 { #category : #'adding item' }
@@ -55,9 +58,17 @@ Socio >> buscar: cuotas desde: fromDate hasta: toDate [
 
 { #category : #calculating }
 Socio >> calcularPagos: fromDate hasta: toDate [
-	^ (pagos
-		select: [ :each | each fecha between: fromDate and: toDate ])
-		sumNumbers: [ :each | each monto ]
+	| total |
+	total := 0.
+	pagos
+		ifNotEmpty: [ total := (pagos
+				select: [ :each | each fecha between: fromDate and: toDate ])
+				sumNumbers: [ :each | each monto ] ].
+	(pagoMatricula fecha
+		between: fromDate
+		and: toDate)
+		ifTrue: [ total := total + pagoMatricula monto ].
+	^ total
 ]
 
 { #category : #accessing }
@@ -89,10 +100,17 @@ Socio >> pagoCuota: unaCuota metodoDePago: unMetodoDePago [
 		add: (Pago new: nroSocio cobro: unaCuota metodoDePago: unMetodoDePago)
 ]
 
+{ #category : #accessing }
+Socio >> pagoMatricula [
+	^ pagoMatricula
+]
+
 { #category : #'adding item' }
 Socio >> pagoMatricula: unaMatricula metodoDePago: unMetodoDePago [
-	pagos
-		add: (Pago new: nroSocio cobro: unaMatricula metodoDePago: unMetodoDePago)
+	^pagoMatricula := Pago
+		new: nroSocio
+		cobro: unaMatricula
+		metodoDePago: unMetodoDePago
 ]
 
 { #category : #accessing }

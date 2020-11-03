@@ -1,25 +1,29 @@
 Class {
 	#name : #SociosAlDia,
-	#superclass : #Index,
+	#superclass : #Consultas,
 	#category : #'Objetos1-TrabajoFinal-InterfaceDeUsuario'
 }
 
 { #category : #rendering }
 SociosAlDia >> renderBotones: html [
-	(cooperativa sociosAlDia isEmpty)
-		ifTrue: [ html paragraph: 'No hay socios ingresados' ]
-		ifFalse: [ html
+	cooperativa sociosAlDia isEmpty
+		ifTrue: [ html paragraph: 'No hay ningun socio al día' ]
+			ifFalse:
+			[ html
 				unorderedList: [ cooperativa sociosAlDia
-						do: [ :socio | html listItem: [ self renderSocio: socio on: html ] ] ] ]
+						do: [ :socio | html listItem: [ self renderSocio: socio on: html ] ] ] ].
+				html submitButton
+			class: 'btn';
+		callback: [ self volver ];
+		with: 'Volver'
 ]
 
 { #category : #rendering }
 SociosAlDia >> renderSocio: socio on: html [
 	html
-		render: socio name;
-		render: ' ';
 		render: socio nroSocio;
-		render: ' ';
+		render: ' con DNI: ';
 		render: socio dni;
-		render: socio aCargo.
+		render: ' a cargo de: ';
+		render: (socio aCargo collect: [ :estudiante | estudiante nombre ])
 ]

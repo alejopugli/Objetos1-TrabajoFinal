@@ -16,7 +16,7 @@ Cobros class >> new: valor [
 Cobros >> actualizarValor: nuevoValor [
 	nuevoValor > 0
 		ifTrue: [ valor := nuevoValor.
-			^ true ].
+			^ valor ].
 	^ Error signal
 ]
 

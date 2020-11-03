@@ -5,31 +5,27 @@ Class {
 }
 
 { #category : #rendering }
-Actualizaciones >> consultas [ 
+Actualizaciones >> actualizarCuota [
+	self call: ActualizarCuota new
 ]
 
 { #category : #rendering }
-Actualizaciones >> cuota [
+Actualizaciones >> actualizarMatricula [
+	self call: ActualizarMatricula new
 ]
 
 { #category : #rendering }
 Actualizaciones >> renderBotones: html [
 	html submitButton
 		class: 'btn';
-		callback: [ self cuota ];
+		callback: [ self actualizarCuota ];
 		with: 'Cuota'.
 	html submitButton
 		class: 'btn';
-		callback: [ self consultas ];
+		callback: [ self actualizarMatricula ];
 		with: 'Matricula'.
 	html submitButton
 		class: 'btn';
 		callback: [ self volver ];
 		with: 'Volver'
-]
-
-{ #category : #rendering }
-Actualizaciones >> volver [
- self answer 
-	
 ]

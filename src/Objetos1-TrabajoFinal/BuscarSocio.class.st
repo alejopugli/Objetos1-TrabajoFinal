@@ -1,29 +1,39 @@
 Class {
 	#name : #BuscarSocio,
-	#superclass : #Index,
+	#superclass : #Consultas,
+	#classVars : [
+		'aBuscar'
+	],
 	#category : #'Objetos1-TrabajoFinal-InterfaceDeUsuario'
 }
 
 { #category : #rendering }
-BuscarSocio >> cuotasPagadas: nro [
-	cooperativa usuarios detect: [ :each | each nroSocio = nro ] ifNone: [  ]
+BuscarSocio >> aBuscar [
+^aBuscar 
 ]
 
 { #category : #rendering }
-BuscarSocio >> cuotasPagadas: nro with: html [
-	cooperativa usuarios
-		detect: [ :each | each nroSocio = nro ]
-		ifNone: [  ]
+BuscarSocio >> aBuscar: nro [
+	aBuscar := nro asNumber
 ]
 
 { #category : #rendering }
 BuscarSocio >> renderBotones: html [
 	html
-		form: [ html label
-				class: 'lbl';
-				with: 'Ingrese nro de socio: '.
-			html textInput class: 'form-input'.
-			html button
-				callback: [ self cuotasPagadas: html ];
-				with: 'aceptar' ]
+		form: [ html text: 'Ingrese nro de socio: '.
+			html select
+				list:
+					(cooperativa socios
+						ifNotEmpty: [ :oc | oc collect: [ :each | each nroSocio ] ]);
+				callback: [ :value | self aBuscar: value ];
+				selected:1.
+			html break.
+			html submitButton
+				class: 'btn';
+				callback: [ self call: RenderCuotasPagadas new ];
+				with: 'aceptar'.
+			html submitButton
+				class: 'btn';
+				callback: [ self volver ];
+				with: 'Volver' ]
 ]

@@ -44,13 +44,13 @@ TestCooperativa >> setUp [
 
 { #category : #tests }
 TestCooperativa >> testActualizarValorCouta [
-	| cuota50 |
-	cuota50 := self agregarCuota: 01.
-	self assert: cuota50 valor equals: 100.
-	cuota50 actualizarValor: 500.
-	self assert: cuota50 valor equals: 500.
-	self should: [ cuota50 actualizarValor: 0 ] raise: Error.
-	self should: [ cuota50 actualizarValor: -1 ] raise: Error
+	| cuota |
+	cuota := self agregarCuota: 01.
+	self assert: cuota valor equals: 100.
+	cuota actualizarValor: 500.
+	self assert: cuota valor equals: 500.
+	self should: [ cuota actualizarValor: 0 ] raise: Error.
+	self should: [ cuota actualizarValor: -1 ] raise: Error
 ]
 
 { #category : #tests }
@@ -130,6 +130,7 @@ TestCooperativa >> testAltaSocio [
 { #category : #tests }
 TestCooperativa >> testCalcularIngresos [
 	| socio socio2 cuota cuota2 |
+	cooperativa actualizarValorMatricula: 50.
 	socio := self altaDeSocio: 122 tel: 123.
 	socio2 := self altaDeSocio: 121 tel: 124.
 	cuota := self agregarCuota: 01.
@@ -138,21 +139,21 @@ TestCooperativa >> testCalcularIngresos [
 			(cooperativa
 				calcularIngresos: (Date year: 2020 day: 1)
 				hasta: Date tomorrow)
-		equals: 0.
+		equals: 100.	"50 la matricula por 2 socios"
 	self pagoCuota: socio cuota: cuota.
 	self
 		assert:
 			(cooperativa
 				calcularIngresos: (Date year: 2020 day: 1)
 				hasta: Date tomorrow)
-		equals: 100.
+		equals: 200.	"100 de matricula + cuota de 100"
 	cuota2 := self agregarCuota: 02.
 	self
 		assert:
 			(cooperativa
 				calcularIngresos: (Date year: 2020 day: 1)
 				hasta: Date tomorrow)
-		equals: 100.
+		equals: 200.
 	self pagoCuota: socio2 cuota: cuota.
 	self
 		pagoCuota: socio2
@@ -163,7 +164,7 @@ TestCooperativa >> testCalcularIngresos [
 			(cooperativa
 				calcularIngresos: (Date year: 2020 day: 1)
 				hasta: Date tomorrow)
-		equals: 285.	"100 + 100 + (100-15%)"
+		equals: 385.	"100 + 100 + 100 + (100-15%)"
 	self
 		pagoCuota: socio
 		cuota: cuota2
@@ -173,7 +174,7 @@ TestCooperativa >> testCalcularIngresos [
 			(cooperativa
 				calcularIngresos: (Date year: 2020 day: 1)
 				hasta: Date tomorrow)
-		equals: 375	"285 + (100-10%)"
+		equals: 475	"385 + (100-10%)"
 ]
 
 { #category : #tests }
@@ -193,17 +194,17 @@ TestCooperativa >> testConsultarPagos [
 	socio := self altaDeSocio: 122 tel: 123.
 	self
 		assert: (cooperativa consultarPagos: socio nroSocio) size
-		equals: 1.
+		equals: 0.
 	cuota := self agregarCuota: 01.
 	self pagoCuota: socio cuota: cuota.
 	self
 		assert: (cooperativa consultarPagos: socio nroSocio) size
-		equals: 2.
+		equals: 1.
 	cuota2 := self agregarCuota: 02.
 	self pagoCuota: socio cuota: cuota2.
 	self
 		assert: (cooperativa consultarPagos: socio nroSocio) size
-		equals: 3.
+		equals: 2.
 	self should: [ cooperativa consultarPagos: 9999 ] raise: Error
 ]
 
@@ -211,32 +212,32 @@ TestCooperativa >> testConsultarPagos [
 TestCooperativa >> testPagoDeCuota [
 	| socio cuota cuota2 |
 	socio := self altaDeSocio: 122 tel: 123.
-	self assert: socio pagos size equals: 1.	"el primer pago es siempre la matricula"
+	self assert: socio pagos size equals: 0.
 	cuota := self agregarCuota: 01.
 	self pagoCuota: socio cuota: cuota.
-	self assert: socio pagos size equals: 2.
+	self assert: socio pagos size equals: 1.
 	self should: [ self pagoCuota: socio cuota: cuota ] raise: Error.
 	cuota2 := self agregarCuota: 02.
 	self pagoCuota: socio cuota: cuota2.
-	self assert: socio pagos size equals: 3
+	self assert: socio pagos size equals: 2
 ]
 
 { #category : #tests }
 TestCooperativa >> testSociosAlDia [
 	| socio socio2 cuota cuota2 |
 	socio := self altaDeSocio: 122 tel: 123.
-	socio pagos first fecha: (Date year: 2020 day: 1).
+	socio pagoMatricula fecha: (Date year: 2020 day: 1).
 	socio2 := self altaDeSocio: 121 tel: 124.
-	socio2 pagos first fecha: (Date year: 2020 day: 1).
+	socio2 pagoMatricula fecha: (Date year: 2020 day: 1).
 	cuota := self agregarCuota: 1.
 	self assert: cooperativa sociosAlDia size equals: 0.
 	self pagoCuota: socio cuota: cuota.
-	self assert: cooperativa sociosAlDia first equals: socio.
-	cuota2 := self agregarCuota: 02.
+	self assert: cooperativa sociosAlDia size equals: 1.
+	cuota2 := self agregarCuota: 2.
 	self assert: cooperativa sociosAlDia size equals: 0.
 	self pagoCuota: socio2 cuota: cuota.
 	self pagoCuota: socio2 cuota: cuota2.
-	self assert: cooperativa sociosAlDia first equals: socio2.
+	self assert: cooperativa sociosAlDia size equals: 1.
 	self pagoCuota: socio cuota: cuota2.
 	self assert: cooperativa sociosAlDia size equals: 2
 ]

@@ -32,3 +32,8 @@ DNI:= unDNI.
 encargado:= unSocio.
 ^self.
 ]
+
+{ #category : #accessing }
+Estudiante >> nombre [
+^nombre
+]

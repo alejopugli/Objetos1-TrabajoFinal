@@ -38,10 +38,11 @@ Cooperativa >> agregarMetodoDePago: unNombre comision: unaComision [
 
 { #category : #tests }
 Cooperativa >> altaDeCuota: valor mes: unMes año: unAño [
-	| nuevaCuota |
-	(unAño >= Date today year and: valor > 0)
-		ifTrue: [ (0 < unMes and: unMes < 13)
-				ifFalse: [ ^ Error signal ] ]
+	| fecha nuevaCuota |
+	fecha := [ Date year: unAño month: unMes day: 1 ]
+		on: Error
+		do: [ ^ Error signal ].
+	(fecha year >= Date today year and: valor > 0)
 		ifFalse: [ ^ Error signal ].
 	cuotas
 		detect: [ :each | each mes = unMes and: each año = unAño ]
@@ -54,13 +55,15 @@ Cooperativa >> altaDeCuota: valor mes: unMes año: unAño [
 { #category : #tests }
 Cooperativa >> altaDeSocio: unDNI tel: telefono [
 	| nuevoSocio |
-	unDNI = 0
+	(telefono isNil or: telefono <= 0)
+		ifTrue: [ ^ Error signal ].
+	(unDNI isNil or: unDNI <= 0)
 		ifTrue: [ ^ Error signal ].
 	socios
 		detect: [ :each | each dni = unDNI ]
 		ifFound: [ ^ Error signal ].
-	nuevoSocio := Socio new: socios size tel: telefono DNI: unDNI.
-	nuevoSocio pagoMatricula: matricula  metodoDePago: metodosDePago first. 
+	nuevoSocio := Socio new: (socios size) +1 tel: telefono DNI: unDNI.
+	nuevoSocio pagoMatricula: matricula metodoDePago: metodosDePago first.
 	socios add: nuevoSocio.
 	"alta de estudiante?"
 	^ nuevoSocio
@@ -69,7 +72,10 @@ Cooperativa >> altaDeSocio: unDNI tel: telefono [
 { #category : #calculations }
 Cooperativa >> calcularIngresos: fromDate hasta: toDate [
 	^ socios
-		sumNumbers: [ :each | each calcularPagos: fromDate hasta: toDate ]
+		sumNumbers: [ :each | 
+			(each calcularPagos: fromDate hasta: toDate)
+				
+				 ]
 ]
 
 { #category : #accessing }

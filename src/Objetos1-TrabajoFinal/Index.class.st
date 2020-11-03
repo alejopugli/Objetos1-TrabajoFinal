@@ -6,16 +6,15 @@ Luego dirijase a localhost:8080/index
 Class {
 	#name : #Index,
 	#superclass : #WAComponent,
-	#instVars : [
+	#classVars : [
 		'cooperativa'
 	],
 	#category : #'Objetos1-TrabajoFinal-InterfaceDeUsuario'
 }
 
-{ #category : #'as yet unclassified' }
-Index >> initialize [
-	super initialize.
-	cooperativa := Cooperativa new
+{ #category : #'class initialization' }
+Index class >> initialize [
+ cooperativa := Cooperativa new
 ]
 
 { #category : #rendering }
@@ -25,10 +24,11 @@ Index >> renderBotones: html [
 
 { #category : #rendering }
 Index >> renderContentOn: html [
-	html form: [html heading
-		level: 1;
-		with: 'Bienvenido a su Cooperativa'.
-	self renderBotones: html]
+	html
+		form: [ html heading
+				level: 1;
+				with: 'Bienvenido a su Cooperativa'.
+			self renderBotones: html ]
 ]
 
 { #category : #hooks }
@@ -53,4 +53,9 @@ font-family:Arial;
 text-align:center
 }
 '
+]
+
+{ #category : #rendering }
+Index >> volver [
+	self answer
 ]

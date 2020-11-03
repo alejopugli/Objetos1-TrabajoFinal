@@ -4,9 +4,14 @@ Class {
 	#category : #'Objetos1-TrabajoFinal-InterfaceDeUsuario'
 }
 
+{ #category : #'as yet unclassified' }
+Consultas >> ingresos [ 
+	self call: Ingresos new.
+]
+
 { #category : #rendering }
 Consultas >> pagoDeSocio [
-	self call: BuscarSocio new
+	self call: BuscarSocio new.
 ]
 
 { #category : #rendering }
@@ -21,7 +26,7 @@ Consultas >> renderBotones: html [
 		with: 'Pagos de Socio'.
 	html submitButton
 		class: 'btn';
-		callback: [ self ingresos ];
+		callback: [ self ingresos];
 		with: 'Ingresos'.
 	html submitButton
 		class: 'btn';
@@ -32,9 +37,4 @@ Consultas >> renderBotones: html [
 { #category : #accessing }
 Consultas >> sociosAlDia [
 	self call: SociosAlDia new
-]
-
-{ #category : #rendering }
-Consultas >> volver [
-	self answer
 ]

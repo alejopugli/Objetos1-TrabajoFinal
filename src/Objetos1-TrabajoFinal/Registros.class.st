@@ -5,47 +5,45 @@ Class {
 }
 
 { #category : #rendering }
-Registros >> cuota [
+Registros >> registrarCuota [
+	self call: RegistrarCuota new
 ]
 
 { #category : #'as yet unclassified' }
-Registros >> metodoDePago [
+Registros >> registrarMetodoDePago [
+ self call: RegistrarMetodoDePago new.
 ]
 
 { #category : #'as yet unclassified' }
-Registros >> pago [
+Registros >> registrarPago [
+	self call: RegistrarPago new
+]
+
+{ #category : #rendering }
+Registros >> registrarSocio [
+	self call: RegistrarSocio new
 ]
 
 { #category : #rendering }
 Registros >> renderBotones: html [
 	html submitButton
 		class: 'btn';
-		callback: [ self socio ];
+		callback: [ self registrarSocio ];
 		with: 'Socio'.
 	html submitButton
 		class: 'btn';
-		callback: [ self pago ];
+		callback: [ self registrarPago ];
 		with: 'Pago'.
 	html submitButton
 		class: 'btn';
-		callback: [ self cuota ];
+		callback: [ self registrarCuota ];
 		with: 'Cuota'.
 	html submitButton
 		class: 'btn';
-		callback: [ self metodoDePago ];
+		callback: [ self registrarMetodoDePago ];
 		with: 'Metodo De Pago'.
 	html submitButton
 		class: 'btn';
 		callback: [ self volver ];
 		with: 'Volver'
-]
-
-{ #category : #rendering }
-Registros >> socio [
-	
-]
-
-{ #category : #rendering }
-Registros >> volver [
-	self answer
 ]

@@ -28,10 +28,10 @@ IndexPage >> renderBotones: html [
 	html submitButton
 		class: 'btn';
 		callback: [ self registros ];
-		with: 'Registrar'
-		.
+		with: 'Registrar'.
 	html submitButton
 		class: 'btn';
 		callback: [ self actualizaciones ];
-		with: 'Actuaizar'
+		with: 'Actualizar'.
+		
 ]
