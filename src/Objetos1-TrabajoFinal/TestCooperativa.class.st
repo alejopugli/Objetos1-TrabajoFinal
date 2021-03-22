@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 TestCooperativa >> agregarCuota: mes [
-	^ cooperativa altaDeCuota: 100 mes: mes año: 2020
+	^ cooperativa altaDeCuota: 100 mes: mes año: 2021
 ]
 
 { #category : #tests }
