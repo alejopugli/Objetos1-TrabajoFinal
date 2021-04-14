@@ -18,6 +18,12 @@ Index class >> initialize [
 ]
 
 { #category : #rendering }
+Index >> initialize [
+	super initialize 
+
+]
+
+{ #category : #rendering }
 Index >> renderBotones: html [
 	self subclassResponsibility
 ]
